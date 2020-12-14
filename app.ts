@@ -1,7 +1,10 @@
-const person={
+const Person: {
+    name:string;
+    age:number
+}={
     name:'maximillian',
     age:30
 }
-console.log(person);
+console.log(Person);
 //if we get unexisted property ide tells us and ts tell it in terminal if you compile ts into js
-console.log(person.nickName);
+console.log(Person.name);

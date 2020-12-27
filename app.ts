@@ -17,3 +17,4 @@ function generateErrior(message:string,code:number):never{//never can be used on
 
  var result=generateErrior("an error Occured",500);
  console.log(result);
+//watch mode ease time consume to recompile&compile file again and again as for big project to implement watch mode use tsc file --watch or -w in terminal

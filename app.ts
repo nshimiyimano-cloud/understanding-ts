@@ -22,15 +22,14 @@ function log(message): void {
     console.log(messsage);
 } */
 
-let combineValues:Function;  //this type provided by ts to infer or specify this var as function/as will be function holder
+let combineValues:(a:number,b:number)=>number;  //to tell typescript param type& return value type  that means return result not be perfect becouse its params exceeds 2
 combineValues=add;  //how is done to store function pointer to combineValues
 
-//if here we assign no 5 ts throws an error because 5 take it as number but here is combined values from function add() eg
+//if here we assign no 5 tss throws an error because 5 take it as number but here is combined values from function add() eg
 //combineValues=5; //ncaught TypeError: combineValues is not a function
 
 
 
 console.log(combineValues(90,9));  //here it work becouse it point on that add function
 
-combineValues=printResult;
-console.log(combineValues());
+ combineValues=printResult;  //here they tell 'Type '(num: number) => void' is not assignable to type '(a: number, b: number) => number'.Type 'void' is not assignable to type 'number'.'

@@ -32,4 +32,21 @@ combineValues=add;  //how is done to store function pointer to combineValues
 
 console.log(combineValues(90,9));  //here it work becouse it point on that add function
 
- combineValues=printResult;  //here they tell 'Type '(num: number) => void' is not assignable to type '(a: number, b: number) => number'.Type 'void' is not assignable to type 'number'.'
+ //combineValues=printResult;  //here they tell 'Type '(num: number) => void' is not assignable to type '(a: number, b: number) => number'.Type 'void' is not assignable to type 'number'.'
+
+//we still on collbacks function to specify return value type and params type eg
+
+
+function addAndHundle(n1:number,n2:number,cb:(num:number)=>void){ //here mean result will be number and void means never return but it should accept type of number
+   let  result=n1+n2;
+    cb(result) 
+}
+//if you add other argument in this collb funct ts throw error becouse already know should have only one orgument like eg (result,b)
+addAndHundle(30,30,(result)=>{//this result is that num that should return number type it looks like as collbacks funct done,tyscr know type of result without explicitly specify type here like(result:number)
+    console.log(result);
+})
+
+
+
+
+

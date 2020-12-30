@@ -1,7 +1,7 @@
 const names:string="nshimiyimana";
 
-const button=document.querySelector('button');
-button?.addEventListener("click",function(){
+const button=document.querySelector('button')!;
+button.addEventListener("click",()=>{
 console.log('button habe clicked');
 })
 

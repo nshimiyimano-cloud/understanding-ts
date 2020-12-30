@@ -2,7 +2,7 @@ console.log("write some code here...");
 console.log("this is my first typeScript code");
 let message: string = 'Hello World';
 console.log(message);
-function add(n1, n2:number,showResult:boolean,phrase:string) {
+function add(n1:number, n2:number,showResult:boolean,phrase:string) {
 
    /*  console.log(typeof n1);
     if(typeof n1!=='number' || typeof n2!='number'){

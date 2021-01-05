@@ -14,3 +14,6 @@ function sendAnalytics(data:string){ //here if param with no type if still be er
     console.log(logged);
 }
 sendAnalytics("send analytic data");
+let useName:string;
+useName='jeanluc';
+useName:true;

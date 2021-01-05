@@ -111,3 +111,32 @@ const {firstName,lastName}=person;//this is to get property values of person or 
 const {firstName:myNames,lastName:myLastname}=person; //this is how we can renaming keys or properties of object
 console.log(myNames,myLastname);
 
+//class constructor and this keyword
+
+class Department{
+    name:string='default';
+
+    constructor(n:string){
+    this.name=n;
+    }
+
+    //we can make function or method in this class
+    
+    describe(this:Department){
+        console.log('Department:'+this.name); //here if we use only name we can not access this name property except global variable but this name becouse is inside class we use this
+    }
+
+
+}
+
+//object instatiate to class
+const department=new Department('accounting');
+
+console.log(department);
+//department.describe();
+
+//this keyword is tricky for example is do like this no compiler error but yiu get undefined in console
+
+
+const accountinCopy={name:'dummy name in dummy object',describe:department.describe}; //here we get undefined if we don't have name here not besed on Department class becouse this is dummy object is does not have any instance from class
+accountinCopy.describe(); //but if we have name in this accountinCopy object no error but if no name ts search in department class but not possible becouse this param has type of Department means not to exceed limit of Depar class

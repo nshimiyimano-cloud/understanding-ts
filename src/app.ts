@@ -105,3 +105,9 @@ console.log(addValues(23,4,5,6,7,8,9,10,'hello','jimi'));
 const hobby1=hobbies[0];//to get el1 this is normal way and below is new way where we get pullout or distructure more than one at the same
 const [hoby1,hobby2,...remainingHobbies]=hobbies;
 console.log(hobbies,hoby1,hobby2);
+
+//then go on person object
+const {firstName,lastName}=person;//this is to get property values of person or distructuring
+const {firstName:myNames,lastName:myLastname}=person; //this is how we can renaming keys or properties of object
+console.log(myNames,myLastname);
+

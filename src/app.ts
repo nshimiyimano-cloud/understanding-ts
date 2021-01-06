@@ -115,18 +115,22 @@ console.log(myNames,myLastname);
 
 
 
-
+//to create proprty and initialise both in constructor done only in ts not in js
 
 
 class Department{
-   public name:string='default'; //if this property is public you can make modification out side of department class
+    /* private id:string;  then we define both in constructor
+    public name:string='default'; //if this property is public you can make modification out side of department class */
     private employees:string[]=[];
 
-    constructor(n:string){
-    this.name=n;
+    constructor(private readonly id:string,public name:string){
+    //this.id=id;
+    //this.name=name;
     }
+    
     //logic to add employee
     addEmployee(employee:string){
+        //this.id='id2' //if we do this we told 'annot assign to 'id' because it is a read-only property.ts(2540)'
         this.employees.push(employee);
     }
 
@@ -135,6 +139,7 @@ class Department{
         console.log(this.employees.length);
         console.log(this.employees);
     }
+
 
     //we can make function or method in this class
     
@@ -146,8 +151,9 @@ class Department{
 }
 
 //object instatiate to class
-const accounting=new Department('accounting');
+const accounting=new Department('Id1','accounting'); //becouse in constructor we have 2 parameter and here to initialize we use 2 argument
 console.log(accounting);
+
 //department.describe();
 
 //after instatiating object we can cal our method to add emploee

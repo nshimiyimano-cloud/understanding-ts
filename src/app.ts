@@ -121,7 +121,7 @@ console.log(myNames,myLastname);
 class Department{
     /* private id:string;  then we define both in constructor
     public name:string='default'; //if this property is public you can make modification out side of department class */
-    private employees:string[]=[];
+   /* private*/protected employees:string[]=[];   //then we make it protected to ba able accessible in derived class if private not possible in its child class
 
     constructor(private readonly id:string,public name:string){
     //this.id=id;
@@ -144,31 +144,86 @@ class Department{
     //we can make function or method in this class
     
     describe(this:Department){
-        console.log('Department:'+this.name); //here if we use only name we can not access this name property except global variable but this name becouse is inside class we use this
+        console.log(`Department:${this.id}   ${this.name}`); //here if we use only name we can not access this name property except global variable but this name becouse is inside class we use this
     }
 
 
 }
 
-//object instatiate to class
-const accounting=new Department('Id1','accounting'); //becouse in constructor we have 2 parameter and here to initialize we use 2 argument
-console.log(accounting);
+//here we what to implement inheritance
 
-//department.describe();
+class ITDepartment extends Department {
+constructor(id:string,public admins:string[]){
+    //use super to caal constructor in the base class
+super(id,'IT') //takes arguments of the parent class
+}
+}
+
+class AccountingDepartment extends Department{
+
+    constructor(id:string,public reports:string[]){
+    
+    super(id,'Accounting') //takes arguments of the parent class
+    }
+
+    addReport(text:string){
+        this.reports.push(text);
+    }
+
+    printReports(){
+        console.log(`${this.reports}`);
+    }
+
+    //we can access employees property from Department class
+
+addEmployee(name:string){
+    if(name=='max'){
+        return
+    }
+    this.employees.push(name);
+}
+}
+
+
+
+
+//object instatiate to class
+const it=new ITDepartment('Id1',['nshimiyimana Admin']); //becouse in constructor we have 2 parameter and here to initialize we use 2 argument
+console.log(it);
+
+it.describe();
+it.name='NEW NAME';
 
 //after instatiating object we can cal our method to add emploee
-accounting.addEmployee("hakuzimana Aloyz");
-accounting.addEmployee("nshimiyimana jean luc");
+it.addEmployee("hakuzimana Aloyz");
+it.addEmployee("nshimiyimana jean luc");
 
 //and we use or call our function or method we have been make to display employees
 
-accounting.printEmployeeInformation();
+it.printEmployeeInformation();
+
 
 //becouse is public no secret here we can add add or change employee outside
 
 
 //accounting.employees[3]="habumugisha"; //here if our employees has private we get err becouse if private you are not able to access and to add or change to employees out side the class
 
+
+
+//then create object from AccountingDepartment clas
+const accounting=new AccountingDepartment('id',[]);
+//we use our method addReport to put text of report
+accounting.addReport('some thing went wrong .....');
+
+//to display our report we use our printReports() method
+
+accounting.printReports();
+//then we add employee in our AccountingDepartment
+accounting.addEmployee('max') //if empl name==max return name but not added
+accounting.addEmployee('manuelAdded') //this  added becouse not name ===max
+
+//then we use printEmployeeInformation() method of Department class to display what we have added
+accounting.printEmployeeInformation();
 
 /* 
 

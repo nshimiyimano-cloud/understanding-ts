@@ -113,11 +113,27 @@ console.log(myNames,myLastname);
 
 //class constructor and this keyword
 
+
+
+
+
+
 class Department{
-    name:string='default';
+   public name:string='default'; //if this property is public you can make modification out side of department class
+    private employees:string[]=[];
 
     constructor(n:string){
     this.name=n;
+    }
+    //logic to add employee
+    addEmployee(employee:string){
+        this.employees.push(employee);
+    }
+
+    //logic that will make display all info about employee
+    printEmployeeInformation(){
+        console.log(this.employees.length);
+        console.log(this.employees);
     }
 
     //we can make function or method in this class
@@ -130,13 +146,29 @@ class Department{
 }
 
 //object instatiate to class
-const department=new Department('accounting');
-
-console.log(department);
+const accounting=new Department('accounting');
+console.log(accounting);
 //department.describe();
+
+//after instatiating object we can cal our method to add emploee
+accounting.addEmployee("hakuzimana Aloyz");
+accounting.addEmployee("nshimiyimana jean luc");
+
+//and we use or call our function or method we have been make to display employees
+
+accounting.printEmployeeInformation();
+
+//becouse is public no secret here we can add add or change employee outside
+
+
+//accounting.employees[3]="habumugisha"; //here if our employees has private we get err becouse if private you are not able to access and to add or change to employees out side the class
+
+
+/* 
+
 
 //this keyword is tricky for example is do like this no compiler error but yiu get undefined in console
 
-
+                       //to fix err problem here we add name to ts to see name property  
 const accountinCopy={name:'dummy name in dummy object',describe:department.describe}; //here we get undefined if we don't have name here not besed on Department class becouse this is dummy object is does not have any instance from class
-accountinCopy.describe(); //but if we have name in this accountinCopy object no error but if no name ts search in department class but not possible becouse this param has type of Department means not to exceed limit of Depar class
+accountinCopy.describe(); //but if we have name in this accountinCopy object no error but if no name ts search in department class but not possible becouse this param has type of Department means not to exceed limit of Depar class */

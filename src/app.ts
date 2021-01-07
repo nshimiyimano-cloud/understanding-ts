@@ -118,12 +118,14 @@ console.log(myNames,myLastname);
 //to create proprty and initialise both in constructor done only in ts not in js
 
 
-class Department{
+ abstract class Department{
+
+    static fiscalYear=2020;
     /* private id:string;  then we define both in constructor
     public name:string='default'; //if this property is public you can make modification out side of department class */
    /* private*/protected employees:string[]=[];   //then we make it protected to ba able accessible in derived class if private not possible in its child class
 
-    constructor(private readonly id:string,public name:string){
+    constructor(protected readonly id:string,public name:string){
     //this.id=id;
     //this.name=name;
     }
@@ -143,23 +145,44 @@ class Department{
 
     //we can make function or method in this class
     
-    describe(this:Department){
-        console.log(`Department:${this.id}   ${this.name}`); //here if we use only name we can not access this name property except global variable but this name becouse is inside class we use this
+  abstract describe(this:Department):void;   //{    //we choose this to used as abstract method to be able shared in other derived classes
+       // console.log(`Department:${this.id}   ${this.name}`); //here if we use only name we can not access this name property except global variable but this name becouse is inside class we use this
+  // }
+
+    //we want to create employee with static method that will directly accessed by class itself
+
+  static createEmployee(name:string){
+        return {name:name};
     }
 
 
 }
+//static method
+const employee1=Department.createEmployee('max name with static meth');
+console.log(employee1);
+
+//to get static property 'fiscalYear'
+console.log(Department.fiscalYear);
+
 
 //here we what to implement inheritance
 
-class ITDepartment extends Department {
+ class ITDepartment extends Department {
 constructor(id:string,public admins:string[]){
     //use super to caal constructor in the base class
 super(id,'IT') //takes arguments of the parent class
 }
+//describe must be the same implementation as in AccountingDepartment becouse describe marked abstract then here we implement
+
+describe(){
+    console.log('ITDepartment - id: '+this.id);
+}
+
 }
 
 class AccountingDepartment extends Department{
+
+
 
     //let excute getters and setters here
     private lastReport:string;
@@ -197,6 +220,14 @@ this.addReport(value);
    this.lastReport=reports[0];   //to get first report
     }
 
+//about abstract let we override describe method
+
+describe(){
+    console.log('Accounting Department - ID: '+this.id); //if id is not protected we get error here becouse id is from parent class Department extended we need in parent clas this id property to change it protected to be able accessed in derived or child class
+}
+
+
+
     addReport(text:string){
         this.reports.push(text);
         this.lastReport=text;
@@ -214,6 +245,8 @@ addEmployee(name:string){
     }
     this.employees.push(name);
 }
+
+
 }
 
 
@@ -243,11 +276,11 @@ it.printEmployeeInformation();
 
 
 //then create object from AccountingDepartment class
-const accounting=new AccountingDepartment('id2',['']);
+const accounting=new AccountingDepartment('id2',[]);
 
 
 //to initialize by using setter function
-accounting.mostRecentReport='';
+accounting.mostRecentReport='my year end report';
 
 
 accounting.addReport('some thing went wrong .....');
@@ -264,11 +297,13 @@ accounting.addEmployee('max') //if empl name==max return name but not added
 accounting.addEmployee('manuelAdded') //this  added becouse not name ===max
 
 
-accounting.printReports();
+/* accounting.printReports();
 //then we add employee in our AccountingDepartment
 
 //then we use printEmployeeInformation() method of Department class to display what we have added
-accounting.printEmployeeInformation();
+accounting.printEmployeeInformation(); */
+
+accounting.describe();
 
 /* 
 

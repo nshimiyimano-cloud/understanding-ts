@@ -182,7 +182,8 @@ describe(){
 
 class AccountingDepartment extends Department{
 
-
+//mean will store in accDep class
+private static instance:AccountingDepartment; //has type of accDepartment class will work with getInsate() method
 
     //let excute getters and setters here
     private lastReport:string;
@@ -212,14 +213,24 @@ else{
 this.addReport(value);
 }
 }
-
-
-    constructor(id:string,public reports:string[]){
+//singleton&private constructor
+//here we make it private to not be able initialise as to create object
+  private  constructor(id:string,public reports:string[]){ 
     
-    super(id,'Accounting') //takes arguments of the parent class
-   this.lastReport=reports[0];   //to get first report
+    super(id,'Accounting') 
+   this.lastReport=reports[0];   
     }
 
+    //create static method to replace to create object from class with new keyword with above constructor
+
+
+static getInstance(){
+if(AccountingDepartment.instance){
+    return this.instance;
+}
+this.instance=new AccountingDepartment('Id2',[]); //here is to create object inside class not outside
+return this.instance; 
+}
 //about abstract let we override describe method
 
 describe(){
@@ -276,7 +287,13 @@ it.printEmployeeInformation();
 
 
 //then create object from AccountingDepartment class
-const accounting=new AccountingDepartment('id2',[]);
+//const accounting=new AccountingDepartment('id2',[]); //if you create obj get err becouse constructor is private we do sth like this by using static meth without instatiating like this
+
+//if done like above its error only we do it by call our static meth getInstance()
+const accounting=AccountingDepartment.getInstance();
+const accounting2=AccountingDepartment.getInstance();
+//if both we console it we get the same object
+console.log(accounting,accounting2);
 
 
 //to initialize by using setter function

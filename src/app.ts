@@ -161,24 +161,56 @@ super(id,'IT') //takes arguments of the parent class
 
 class AccountingDepartment extends Department{
 
+    //let excute getters and setters here
+    private lastReport:string;
+
+    //here we add method to make it still accessible in this class used when we retrieve it and add more complex logic here as developer
+    
+get mostRecentReport(){ //this is how to create getter funct int important is to return some thing or retreave
+if(this.lastReport){
+    return this.lastReport;
+    
+}
+else{
+    throw  new Error("report not found..!");
+}
+
+}
+
+//seter name typicaly its good to same as get
+
+set mostRecentReport(value:string){
+    //excute some logic here to add value(report)
+if(!value){
+    throw new Error("please pass in a value!");
+   
+}
+else{
+this.addReport(value);
+}
+}
+
+
     constructor(id:string,public reports:string[]){
     
     super(id,'Accounting') //takes arguments of the parent class
+   this.lastReport=reports[0];   //to get first report
     }
 
     addReport(text:string){
         this.reports.push(text);
+        this.lastReport=text;
     }
 
     printReports(){
-        console.log(`${this.reports}`);
+        console.log('Report'+this.reports);
     }
 
     //we can access employees property from Department class
 
 addEmployee(name:string){
     if(name=='max'){
-        return
+        return this.name;
     }
     this.employees.push(name);
 }
@@ -210,17 +242,30 @@ it.printEmployeeInformation();
 
 
 
-//then create object from AccountingDepartment clas
-const accounting=new AccountingDepartment('id',[]);
-//we use our method addReport to put text of report
+//then create object from AccountingDepartment class
+const accounting=new AccountingDepartment('id2',['']);
+
+
+//to initialize by using setter function
+accounting.mostRecentReport='';
+
+
 accounting.addReport('some thing went wrong .....');
 
+
+//if we try to get/console mostRecentReport we call method as normal property becouse is how getter method work
+console.log(accounting.mostRecentReport);//if no report assigned it throw error is in our mostRecentReport() method
+
+//we use our method addReport to put text of report
+
+
 //to display our report we use our printReports() method
+accounting.addEmployee('max') //if empl name==max return name but not added
+accounting.addEmployee('manuelAdded') //this  added becouse not name ===max
+
 
 accounting.printReports();
 //then we add employee in our AccountingDepartment
-accounting.addEmployee('max') //if empl name==max return name but not added
-accounting.addEmployee('manuelAdded') //this  added becouse not name ===max
 
 //then we use printEmployeeInformation() method of Department class to display what we have added
 accounting.printEmployeeInformation();

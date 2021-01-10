@@ -108,3 +108,38 @@ function useVehicle(vehicle:vehicle){
 //to call our function
 useVehicle(v1);
 useVehicle(v2);
+
+//on descriminated union
+
+interface Bird{
+    //to make discriminated we add extra property with name you want as literal type
+    type:'bird',
+    flyingSpeed:number
+}
+interface Horse{
+    type:"horse",
+    runningSpeed:number
+}
+
+//then here we use union type
+
+type Animal=Bird | Horse;
+
+function moveAnimal(animal:Animal){
+    //we need to check
+    //if('flyingSpeed' in animal) //instead of this below is how to implement discriminated with named literal types
+    //console.log('Moving with speed:'+animal.flyingSpeed);    //here we can acces any property but they have different properties 
+let speed;    //we  need this internal variable
+    switch(animal.type){  //this type property understood at all because both interface have it
+
+case 'bird':
+    speed=animal.flyingSpeed;
+
+    break;
+    case 'horse':
+        speed=animal.runningSpeed;
+
+    }
+    console.log('Moving at speed: '+speed);
+}
+moveAnimal({type:"bird",flyingSpeed:10}) //if you choose type:horse property must be runningSpeed,as here if we write runningSpeed at this type of bird you line on it as TSC error

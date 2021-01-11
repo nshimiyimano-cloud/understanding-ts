@@ -29,15 +29,34 @@ type Numeric=boolean | number;
 type Universe=Combinabled & Numeric;
 
 
+
+//about FUNCTION OVERLOADS
+//then we add other function overloads to contradict our below function to enforce that value we'll pass at calling function must be combinable type
+
+function addtwoNum(a:string,b:string):string;
+function addtwoNum(a:string,b:number):string;
+function addtwoNum(a:number,b:string):string;
+function addtwoNum(a:number,b:number):number;
+
+
 //then we work with type guard 
 
-function addtwoNum(a:Combinabled,b:Combinabled){
+function addtwoNum(a:Combinabled,b:Combinabled){  //if we hover on this we see (+3 overloads) becouse above function overloads we added on thi function
 
     if(typeof a==='string' || typeof b==='string'){
         return a.toString() + b.toString();
     }
     return a+b;
 }
+
+//now we are able to call with any type of values becouse funct overloads
+
+const result1=addtwoNum('nshimiyimana','jeanluc');
+result1.split(' ');  //but both work  even not this split() not necessary it 
+const result2=addtwoNum('my marks',70);
+const result3=addtwoNum(30,'peoples');
+const result4=addtwoNum(10,20);
+console.log('string string: '+result1,'  string number: '+result2,' number string: '+result3,'  number number: '+result4);
 
 type UnknownEmployee=Employe | Admin; //contains with 2 object type
 
@@ -173,3 +192,4 @@ const ErrorBag:ErrorContainer={
 }
 //above section is how we can write flexible code and toi focus on just types how we can manage them
 
+console.log(ErrorBag.email+"   ,  "+ErrorBag.name);

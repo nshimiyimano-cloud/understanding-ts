@@ -143,3 +143,33 @@ case 'bird':
     console.log('Moving at speed: '+speed);
 }
 moveAnimal({type:"bird",flyingSpeed:10}) //if you choose type:horse property must be runningSpeed,as here if we write runningSpeed at this type of bird you line on it as TSC error
+
+
+//type casting
+//<this ttpe> will known by ts becuse lib{dom":"true"}
+const inputElement= <HTMLInputElement>document.getElementById('user-input')!; //this is first version to use typecasting<---> after this  code on 252 will run no error
+//const inputElement=document.getElementById('user-input') as HTMLInputElement;
+////if(inputElement){
+//to access it
+inputElement.value='hello jeanluc';
+//}
+
+//87 . about index property
+
+//this is how we can define all strict which property name or property values user should use
+
+interface ErrorContainer{
+
+    //to define done by square bla then propname:type and value type( [key or prop:string]:string)
+    [prop:string]:string;
+}
+
+//then object we'll assign on our interface for validating our eg err message
+
+const ErrorBag:ErrorContainer={
+  //  email:'this prop name not allowed this is eg err mesg' //if prop:number tsc will throw 'Type '{ email: string; }' is not assignable to type 'ErrorContainer'.'
+    email:'Not valid Email',
+    name:'you must start with character'
+}
+//above section is how we can write flexible code and toi focus on just types how we can manage them
+

@@ -193,3 +193,17 @@ const ErrorBag:ErrorContainer={
 //above section is how we can write flexible code and toi focus on just types how we can manage them
 
 console.log(ErrorBag.email+"   ,  "+ErrorBag.name);
+
+//ON OPTIONAL CHAINING(optional chaining operator)
+//eg when you're working with app to getting user date
+const fetchedUserDate={
+    id:'ui',
+    name:'max',
+  // job:{title:'CEO',description:'my own campany'}
+};
+//let see some thing complex here in output title 
+//console.log('title: '+fetchedUserDate.job.title);     //but this is not too fancy
+
+//console.log('title: '+fetchedUserDate.job && fetchedUserDate.job.title); //this is how done to avoiding runtime error in javascript
+console.log('title: '+fetchedUserDate?.job?.title);//this is how done to avoiding run time error in typescript(will return undefined if from job prop not set until title property)
+

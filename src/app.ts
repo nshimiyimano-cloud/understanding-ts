@@ -43,3 +43,33 @@ textStoerage.addItem({name:'max'});
 textStoerage.removeItem({name:'emanuel'}); //will reove wrong item
 
 console.log(textStoerage.getItem());
+
+
+
+
+//GENERIC UNTILITY TYPES eg partial
+
+interface CourseGoal{
+    title:string;
+    description:string;
+    completeUntil:Date;
+}
+
+function createCource(title:string,
+    description:string,
+    completeUntil:Date):CourseGoal{ //will return type CourseGoal interface
+   // return {title:title,description:description,completeUntil:completeUntil}  //we not doing this in one step
+
+   //we want to define one by one
+
+   let courseGoal:Partial<CourseGoal>={}; //after have type of CourseGoal this object directly bring err on its own becouse is empty object but on its prop err go away to fix it we add partial
+   //if not have type of CourseGoal properties will get error not known
+
+
+   //partial means is gen type will hold a CourseGoal //to add partial means it tells Ts that this is an object which in the end will be a CourseGoal
+    courseGoal.title=title;
+    courseGoal.description=description;
+    courseGoal.completeUntil=completeUntil;
+
+    return courseGoal as CourseGoal;  //here we fix this error by convert this obj to type CourseGoal as typecasting
+}

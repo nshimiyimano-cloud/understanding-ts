@@ -1,62 +1,45 @@
-const names:Array<string>=[]; //this is gener to define type of values will be store in our array while normally is like eg names:string[]=[....]
+class dataStorage<T>{   //here we try to specify generic class for defining btype every where in this class  
+    private data:T[]=[];  //is lik to say string[] &here will store type(T) of array(T[])
+    addItem(item:T){   //here we get error becouse ts not know the type will be returned
+        this.data.push(item);
+    }
+    removeItem(item:T){ //(indexOf(item),1) 1 means will remove only one item if not that 1 will remove all items
 
-// other generic type is promise
+        //to fix about if we pass object as item at call addItem() to make sure not remove wrong item when it loose its index instead of remove it return it without delete it
 
+        if(this.data.indexOf(item)===-1){
+            return;
+        }
+      else{
+        this.data.splice(this.data.indexOf(item),1);  //after defining type(T) at all every thing is known by TS no throw error
+        }
 
-const promise:Promise<string>=new Promise((resolve,rejected)=>{//you can say <number...>
-    setTimeout(()=>{
-        resolve('this is done') //if value type is number here must resolve numbe as will be returned
-    },3000);
-});
-promise.then((data)=>{ //if type is number and you hover on (data) param you see hass type of number but now is string
-    console.log(data);
-})
+    }
 
-
-//to create our own generic function
-//eg function to combine or to merge two object
-
-function merge<T extends object,U extends object >(objA:T,objB:U){//if we hover on our funct ts show us intersection on T and U as return 'function merge<T, U>(objA: T, objB: U): T & U'         //insted of say (obA:object,objB:object) we equalize with its identifier help ts to know our all properties we'll store in our merged object
-//on constraint to restrict only like object allowed as exstend onject if you pass real value eg merge({name:''},20) on that 20 tsc throw ''Argument of type 'number' is not assignable to parameter of type 'object'.
-//if no constraits ts not see error and at runtime js not see runtime error only you name property without age with 30
-return Object.assign(objA,objB);
-}
-//console.log(merge({name:'nshimiyimana'},{age:30}));
-
-//if no additional as genericT&U if we try to get any property seem unknown by TS not be accessed generic solve problem like that
-const mergedObject=merge({name:'nshimiyimana'},{age:50}); //if we hover on mergedObject constant we see all properties known by TS because gen funct
-console.log(mergedObject,mergedObject.age);//.name&.age automatically seen
-
-/* const mergedObject: {
-    name: string;
-} & {                       if you hover on mergedObject this this just as &(means intersection of 2objects)
-    age: number;
-} */
-
-
-
-//OTHER GENERIC TYPE function
-
-
-//we see element.length ts become complained becouse does not clear that element has length we make it clear or solve by create interface like custom type like below:
-
- interface Lengthy{
-    length:number;
-} 
-
-function countAndDescribe<T extends Lengthy>(element:T):[T,string]/* to show valuetype returned in tuple */{      //hre we have one gen type as for one parameter'element'
-
-let descriptionText='got no value';
-
-if(element.length ===1){
-    descriptionText='got 1 element';
-}
-else if(element.length>1){
-    descriptionText='got'+element.length+' element';
+    getItem(){
+        return [...this.data];
+    }
 }
 
+//now we can create different storages
 
-return [element,descriptionText];  //should return tuple of 2 el
-}
-console.log(countAndDescribe(['sport','cooking']));
+//var textStoerage=new dataStorage<string>() //<string> means our object is to pass in only string if you passin number TS will throw error
 
+//our class to make it more flexible we can give it possible to receive both type whether string or number,.. every type you want
+
+var textStoerage=new dataStorage<string | number | object>();
+//textStoerage.addItem(20) //will thr error becouse is number
+/* textStoerage.addItem('max');//1st storage
+textStoerage.addItem('emanuel') //2nd if we remove max item we will see only emanuel
+textStoerage.removeItem('max'); */
+
+
+//to pass in object
+textStoerage.addItem({name:'emanuel'})
+textStoerage.addItem({name:'max'});
+
+//to remove object no primitive value as element of array will loose its index to delete it
+
+textStoerage.removeItem({name:'emanuel'}); //will reove wrong item
+
+console.log(textStoerage.getItem());

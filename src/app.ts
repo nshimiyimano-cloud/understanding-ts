@@ -24,7 +24,7 @@ return Object.assign(objA,objB);
 //console.log(merge({name:'nshimiyimana'},{age:30}));
 
 //if no additional as genericT&U if we try to get any property seem unknown by TS not be accessed generic solve problem like that
-const mergedObject=merge({name:'nshimiyimana'},50); //if we hover on mergedObject constant we see all properties known by TS because gen funct
+const mergedObject=merge({name:'nshimiyimana'},{age:50}); //if we hover on mergedObject constant we see all properties known by TS because gen funct
 console.log(mergedObject,mergedObject.age);//.name&.age automatically seen
 
 /* const mergedObject: {
@@ -32,3 +32,31 @@ console.log(mergedObject,mergedObject.age);//.name&.age automatically seen
 } & {                       if you hover on mergedObject this this just as &(means intersection of 2objects)
     age: number;
 } */
+
+
+
+//OTHER GENERIC TYPE function
+
+
+//we see element.length ts become complained becouse does not clear that element has length we make it clear or solve by create interface like custom type like below:
+
+ interface Lengthy{
+    length:number;
+} 
+
+function countAndDescribe<T extends Lengthy>(element:T):[T,string]/* to show valuetype returned in tuple */{      //hre we have one gen type as for one parameter'element'
+
+let descriptionText='got no value';
+
+if(element.length ===1){
+    descriptionText='got 1 element';
+}
+else if(element.length>1){
+    descriptionText='got'+element.length+' element';
+}
+
+
+return [element,descriptionText];  //should return tuple of 2 el
+}
+console.log(countAndDescribe(['sport','cooking']));
+

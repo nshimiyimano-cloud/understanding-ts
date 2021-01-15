@@ -1,9 +1,9 @@
-class dataStorage{   //here we try to specify generic class for defining btype every where in this class  
-    private data:(string |boolean |number)[]=[];  //we can use ()paratheses to group out all type as array type eg string[]
-    addItem(item:string|boolean | number){  //here because is primitive we don't need paratheses not array 
+class dataStorage<T extends string |number | boolean >{   //here we try to specify generic class for defining btype every where in this class  
+    private data:T[]=[];  //we can use ()paratheses to group out all type as array type eg string[]
+    addItem(item:T){   //amd here we put on type of T as used in its class
         this.data.push(item);
     }
-    removeItem(item:string |boolean |number){ //(indexOf(item),1) 1 means will remove only one item if not that 1 will remove all items
+    removeItem(item:T){ //amd here we put on type of T as used in its class
 
         //to fix about if we pass object as item at call addItem() to make sure not remove wrong item when it loose its index instead of remove it return it without delete it
 
@@ -21,14 +21,10 @@ class dataStorage{   //here we try to specify generic class for defining btype e
     }
 }
 
-//now we can create different storages
+//above our meth and funct parameters has default types are on our class but here we what to override by take only on type(string) not other while at our class we extends those all types as can be used well
 
-//var textStoerage=new dataStorage<string>() //<string> means our object is to pass in only string if you passin number TS will throw error
-
-//our class to make it more flexible we can give it possible to receive both type whether string or number,.. every type you want
-
-var textStoerage=new dataStorage();    //here we remove generic way because we not use it above
-//textStoerage.addItem(20) //will thr error becouse is number
+var textStoerage=new dataStorage<string>();    //we override default behavior of class types we want only string here not other type
+//textStoerage.addItem(20) //will thr error becouse is number but our object have only to manage string
 textStoerage.addItem('max');//1st storage
 textStoerage.addItem('emanuel') //2nd if we remove max item we will see only emanuel
 textStoerage.removeItem('max');

@@ -27,7 +27,7 @@
     // "importHelpers": true,                 /* Import emit helpers from 'tslib'. */
     // "downlevelIteration": true,            /* Provide full support for iterables in 'for-of', spread, and destructuring when targeting 'ES5' or 'ES3'. */
     // "isolatedModules": true,               /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
-//"noEmitOnError":true,
+"noEmitOnError":true,
     
     /* Strict Type-Checking Options */
    "strict": true,                         /* Enable all strict type-checking options. */
@@ -40,9 +40,9 @@
     // "alwaysStrict": true,                  /* Parse in strict mode and emit "use strict" for each source file. */
 
     /* Additional Checks */
-    // "noUnusedLocals": true,                /* Report errors on unused locals. */
-    // "noUnusedParameters": true,            /* Report errors on unused parameters. */
-    // "noImplicitReturns": true,             /* Report error when not all code paths in function return a value. */
+    "noUnusedLocals": true,                /* Report errors on unused locals. */
+   // "noUnusedParameters": true,            /* Report errors on unused parameters. */
+     //"noImplicitReturns": true,             /* Report error when not all code paths in function return a value. */
     // "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
     // "noUncheckedIndexedAccess": true,      /* Include 'undefined' in index signature results */
 
@@ -65,7 +65,7 @@
     // "inlineSources": true,                 /* Emit the source alongside the sourcemaps within a single file; requires '--inlineSourceMap' or '--sourceMap' to be set. */
 
     /* Experimental Options */
-    // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
+     "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
 
     /* Advanced Options */

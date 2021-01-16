@@ -99,18 +99,51 @@ console.log(target,propertyName);
 }
 
 
-//we add other class for our other decorat
+//accessor decoratir this is for our _price property
+
+function Log2(target:any,propertyName:string,descriptor:PropertyDescriptor){ //this property descritor type built in typescript
+    console.log('ECCESSOR DECORATOR');
+
+    console.log(target);
+    console.log(propertyName);
+    console.log(descriptor);
+}
+
+ //other decpr for getter function alse it has target to display prototype of our obj/class and name and descriptor params
+
+ function Log3(target:any,name:string|symbol,descriptor:any){
+    console.log('METHOD decorator');
+    console.log(target);
+    console.log(name)
+    console.log(descriptor);
+} 
+
+function Log4(target:any,name:string,position:number){  //this position is for a position of arg go with parameter
+    console.log('PARAMETER DECPRATOR');
+    console.log(target);
+    console.log(name);
+    console.log(position); //we'll see 0 becouse index of argument start from0
+}
+
+
+
+//we add other class for our other sdecorat
 
 
 //to use our decorator
 
 
 class Product {
-@Log  //our log decorator used inside class
+@Log  //our log decorator used inside class title dec
     title:string;
+
+//this is _price decorator
+
     private _price:number;
 
-    set price(val:number){
+    @Log2
+//SETTER FUNCTION
+    set price(val:number){  //on decora to display propertyname we see price becouse is  for this setter function not for _price property
         if(val>0){  //this check is for to not set negative price
             this._price=val;
         }
@@ -118,12 +151,24 @@ class Product {
             throw  new Error('invalid price - should be positive');
         }
     }
+
+   
     constructor(t:string,p:number ) {
         this.title=t;
         this._price=p;
     }
 
-    getPriceWithTax(tax:number){
+
+
+
+    //we call Log3 for this method getpriceWithTax
+
+
+
+    @Log3
+//GETTER FUNCTIONs
+
+    getPriceWithTax(@Log4  tax:number){
         return this._price*(1+tax);
     }
     

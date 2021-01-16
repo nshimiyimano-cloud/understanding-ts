@@ -41,22 +41,40 @@ function Logger(logString:string){
       
 
     console.log('TEMPLATe FACTORY')
-    return function(constructor:any){
+    return function<T extends {new(...orgs:any[]):{name:string}}>(orginalConstructor:T){  //we fix problem to if we call   @WithTemplate('<h2>this is person object</h2>','app' its type not known and if we this.name name not nown ti fix it we :{name:string} as returned
+
+        //we add new contructor as new fuctionality to still keep all properties of orginal constr here
 
 
         //then we see how decorator be excuted from last to first
-        console.log('lendering Template......');
-const hookEl=document.getElementById(hookId);
-const p=new constructor();
+       
 
-// check if var hookEl is a thing not undefined perfom some logic
+return class extends orginalConstructor{  //this constr is based on orginal constructorfunction (above) it keep all property and methods on org constructor function without loose it
 
-if(hookEl){
-    hookEl.innerHTML=teampalte;
-    document.querySelector('h2')!.textContent=p.name;
+constructor(..._:any[]){  //we pass in ..._ instead of ...orgs as not well this param is nececary
+    //we gona call arginal constructor
+    super();
+    //we gonne move logic for rendering from org constr to this constru
+
+    console.log('lendering Template......');
+    const hookEl=document.getElementById(hookId);
+    //const p=new orginalConstructor(); //we don't call return constructor here like this we use this key word for 2nd constructor in this unnamed class
+    
+    // check if var hookEl is a thing not undefined perfom some logic
+    
+    if(hookEl){
+        hookEl.innerHTML=teampalte;
+        document.querySelector('h2')!.textContent=this.name/* p.name; here we're allowed to use this keword becuse its as normal constructo not as above return constructor */
+    }
+}
+
 }
 
       }
+
+//after change our program still work well as previous
+
+
   }
 
 //we can add more than one decorato
@@ -66,7 +84,6 @@ if(hookEl){
   //to excute our useful decorator
   
   @WithTemplate('<h2>this is person object</h2>','app')//this 2nd arg is id from our div id in index.html
-
 
 
 

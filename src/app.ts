@@ -190,3 +190,56 @@ class Product {
     }
     
 }
+
+// EXAMPLE: creating an 'Autobind' decorator (couse to not return undefined when we click button to trigger what are in our eventListener)
+
+
+
+
+//even this args change into _:any,_2:string no problem becouse not should be used by ts as descriptor param
+function  Autobind(target:any,methodName:string,descriptor:PropertyDescriptor) { //we hav target as prototype of our cl because we do instantiate with constructor
+    //to make sure this keyword is to object this method eg addListener belongs to it yet we achive that by do this(to access orgina methos)
+    const orginalMethod=descriptor.value;
+    const adjDescriptor:PropertyDescriptor={  //iyaherekeza propDescr ibi nibyi bizaba returned later
+        //we are able to set 
+        configurable:true,
+        enumerable:false,
+        get(){
+                    //and our get where this allow to bind when user try tio access property
+
+
+                    //if we remove bind(this) we w'll get undefined as before
+        const boundFuction=orginalMethod.bind(this); //we get our org method then bind to our object to not return undefined
+        return boundFuction;
+        }
+        //and here we return adjDes
+
+
+    }
+
+    return adjDescriptor;
+
+}
+
+//let we create a class to print message we'll used when we click button
+class  Printer {
+    message='this works';
+
+    //we add our decorator to bind on this method
+
+    @Autobind
+    showMessage(){
+        console.log(this.message);
+    }
+}
+
+const p=new Printer();
+
+
+const btn=document.querySelector('button')!;
+
+//btn.addEventListener('click',p.showMessage)
+//above not work becouse no reference to p becouse our msg limited on p(printer) becouse that this keywird to reference on our p object we do binding with bind() method
+
+// we have to rid this becuse we have decorator functionality to autobind  btn.addEventListener('click',p.showMessage.bind(p)); //work well but this is default js now we can make dec to autobind to this every time this called
+btn.addEventListener('click',p.showMessage); 

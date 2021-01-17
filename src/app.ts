@@ -243,3 +243,73 @@ const btn=document.querySelector('button')!;
 
 // we have to rid this becuse we have decorator functionality to autobind  btn.addEventListener('click',p.showMessage.bind(p)); //work well but this is default js now we can make dec to autobind to this every time this called
 btn.addEventListener('click',p.showMessage); 
+
+//VALIDATING with decorators -first step //some app like web service return sth but not sure that have guaratee of input if is validated
+
+//validation decorators
+
+//decorator to apply our below validation ligic
+
+function Validate(obj:object){}  //we use this but in next module we see package to validate well
+//above  we can check if tis storage for your object we got for the class the object is based on we do have validated registered for title, for price and so on then run our validat logic that my idea(instructor) here
+
+function Required(){  //for title
+
+}
+
+function Positivenumber(){ //this is for proce:number
+
+}
+
+
+
+
+
+
+
+class Course{
+
+    @Required
+    title:string;
+    @Positivenumber
+    price:number;
+    constructor(t:string,p:number){
+        this.title=t;
+        this.price=p;
+    }
+
+
+}
+//then we add form in our ind.html
+const courseForm=document.querySelector('form')!;
+
+courseForm.addEventListener('submit',event=>{
+    event.preventDefault(); //here is to prevent form from be submited without http request (without fill it)
+    //then next we extract data title& price
+
+    const titleEl=document.getElementById('title') as HTMLInputElement;   //here we use typecasting this couse ts to unders is input then  be able to recorganize oll property are to input eg .value...
+    const priceEl=document.getElementById('price') as HTMLInputElement;
+
+    //to get form data
+    const title=titleEl.value;
+    const price=+priceEl.value;  //to change this into number as in ts how done we add +sign
+
+
+    //in normal js we can validate  titlelike        //if(title.trim().length>0){} then implement  we solve this with decorator
+    //then we gonna create course
+    const createCourse=new Course(title,price); //if no+sign we get err on this price arg because every input ts take it as string
+    console.log(createCourse);
+
+
+    //eg to apply our all validation logic above if not filled(required) and if not positive number throw error
+
+    if(!Validate(createCourse)){
+alert('Invalid input, try again');
+    }
+    else{
+        return;
+    }
+
+})
+//all work but if we save without date it save with empty data this is not valid for our application
+

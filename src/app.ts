@@ -244,25 +244,117 @@ const btn=document.querySelector('button')!;
 // we have to rid this becuse we have decorator functionality to autobind  btn.addEventListener('click',p.showMessage.bind(p)); //work well but this is default js now we can make dec to autobind to this every time this called
 btn.addEventListener('click',p.showMessage); 
 
+
+
+//validation with decorator -finished
+
+interface validatorConfig{  //where i want to configure tha i have to work with my idea
+    [property:string]:{  //here we use index type notation to specify type of propertyname/key
+  
+  [validatableprop:string]:string[]  //this prop eg ['required','positive'] somthing like that can be added to this list of validators
+  
+    }
+}
+
+const registeredValidator:validatorConfig={}; //we initial empty{} as gets loaded no validators have been registered yet well
+
+
+
+
+
+
 //VALIDATING with decorators -first step //some app like web service return sth but not sure that have guaratee of input if is validated
 
 //validation decorators
 
+
+
+
 //decorator to apply our below validation ligic
 
-function Validate(obj:object){}  //we use this but in next module we see package to validate well
-//above  we can check if tis storage for your object we got for the class the object is based on we do have validated registered for title, for price and so on then run our validat logic that my idea(instructor) here
 
-function Required(){  //for title
+function Required(target:any,propName:string){  //for title
+registeredValidator[target.constructor.name]={ //. this .constructor point at constructor function that was used to create our object  but this .name which exist in any function in javascr to get the function name eg course class will get course
 
+//with this with spread operator if we save empty output will fail no thing you see even on title while before we have returned title:"" at this not be returned
+    ...registeredValidator[target.constructor.name], //to take existing key value pair for that cllass name before we add new one
+//we get property name we want to validate/we want to add validator
+
+
+[propName]:['required']   //just after this we can copy to positive validat then['positive]
+}
 }
 
-function Positivenumber(){ //this is for proce:number
 
+
+function Positivenumber(target:any,propName:string){ //this is for proce:number
+    registeredValidator[target.constructor.name]={ 
+     ...registeredValidator[target.constructor.name], //to take all existing key value pair for that clas name/obstructor.nameject(eg[target.con]) before we add new jeyvalue pair(eg as below [propName]:['required])
+        
+        [propName]:['positive']  
+        }
 }
 
+//we use this but in next module we see package to validate well
+
+//we can check if tis storage for your object we got for the class the object is based on we do have validated registered for title, for price and so on then run our validat logic that my idea(instructor) here
+
+function Validate(obj:any){
+
+    //same logic as before is to access constructor property which exist on prototype of object & therefore we can access it directly on object eg(new course() is based on course class)
+const objValidatorConfig=registeredValidator[obj.constructor.name];
+//we have to check if we don't have any validated config if not found return true because then certainly is valid there is nothing to validate
+if(!objValidatorConfig){
+    return true;
+}
+else{  //lelse we do find it i want to loop through this objValidatorConfig here with for in loop
 
 
+
+    let isValid=true;
+for (const prop in objValidatorConfig) {
+
+//to see which property not validated
+console.log(prop);
+
+
+    //here we go to all validators(eg ['required]) we might have to property is in array we use for of loop
+
+    for (const validator of objValidatorConfig[prop]) {  //here we get eg required,positive,..
+        //here we use switch statement ofcourse call external functions based on which validated we find
+        switch(validator){
+            //we basically on diffent cases here eg if we get required
+            case 'required':
+                //we convert this to real true or false value by double bung(!!) operator
+               // return !!obj[prop] ;   //to see this propert name below is for clear code
+               isValid=isValid && !!obj[prop];  //&& is true oper if true&& true return1 if true and falsereturn false
+         
+//this is to update isvalid valiable then at the end return it
+             break;
+
+            case 'positive':
+                
+           // return obj[prop]>0; //we follow below isVal as its clear
+           isValid=isValid && obj[prop] >0;
+           break;
+        }
+
+
+    }
+
+    
+}
+//if we haven't registered any validator(eg['required']) we passed empty array or something  we RETURN TRUE as DEFAULT as well
+
+//return true; //instead of return this we return our isValid
+return isValid;
+}
+
+}  
+
+
+
+//WITH ABOVE VALIDATION WE SEE ERROR MESSAGE BUT  so we need extra thing to FIX BUGS
 
 
 
@@ -298,16 +390,18 @@ courseForm.addEventListener('submit',event=>{
     //in normal js we can validate  titlelike        //if(title.trim().length>0){} then implement  we solve this with decorator
     //then we gonna create course
     const createCourse=new Course(title,price); //if no+sign we get err on this price arg because every input ts take it as string
-    console.log(createCourse);
+   // console.log(createCourse);
 
 
     //eg to apply our all validation logic above if not filled(required) and if not positive number throw error
 
     if(!Validate(createCourse)){
 alert('Invalid input, try again');
+
+return;       //this return couse to not return invalid or unappropriate result
     }
     else{
-        return;
+        console.log(createCourse)
     }
 
 })
